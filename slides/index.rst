@@ -22,6 +22,7 @@ Topics
     finish
     references
 
+.. include:: ../../common/introduction.rst
 .. include:: catching_up.rst
 .. include:: object_model.rst
 .. include:: higher_order.rst
@@ -31,7 +32,7 @@ Topics
 .. include:: sqlalchemy.rst
 .. include:: parsing.rst
 
-.. include:: finish.rst
+.. include:: ../../common/finish.rst
 .. include:: references.rst
 
 .. vim: set path=.,slides,,
