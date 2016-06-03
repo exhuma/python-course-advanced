@@ -1,6 +1,7 @@
 Unit Testing
 ============
 
+.. TODO generator expression as side-effect
 .. TODO * Writing Unit Tests
 .. TODO * Test Runners
 .. TODO   * builtin
