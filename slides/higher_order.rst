@@ -57,12 +57,10 @@ Example: HTML Wrappers
 
 .. nextslide::
 
-.. hint::
-
-    * The ``multiplicator`` and ``wrapper`` example are very simple!
-    * They can also be solved differently without difficulty.
-    * The idea to take home is that you can write functions that create
-      functions. *Even at runtime!*
+* The ``multiplicator`` and ``wrapper`` example are very simple!
+* They can also be solved differently without difficulty.
+* The idea to take home is that you can write functions that
+  create functions. *Even at runtime!*
 
 
 Example: Timing Functions
