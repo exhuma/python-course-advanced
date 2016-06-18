@@ -31,8 +31,8 @@ Closures
   exits).
 * In the previous example, the inner function ``fun`` keeps a reference to
   ``n`` even *after the call to multiplicator has returned*.
-* I the reference to the inner function is lost/removed (f.ex. ``times2``), the
-  closure is also lost.
+* If the reference to the inner function is lost/removed (f.ex. ``times2``),
+  the closure is also lost.
 
 
 Example: HTML Wrappers
