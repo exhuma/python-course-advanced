@@ -10,10 +10,11 @@ Topics
     :maxdepth: 1
 
     catching_up
-    object_model
-    higher_order
 
     unittesting
+
+    object_model
+    higher_order
     debugging
 
     sqlalchemy
@@ -24,9 +25,11 @@ Topics
 
 .. include:: ../../common/introduction.rst
 .. include:: catching_up.rst
+
+.. include:: unittesting.rst
+
 .. include:: object_model.rst
 .. include:: higher_order.rst
-.. include:: unittesting.rst
 .. include:: debugging.rst
 
 .. include:: sqlalchemy.rst
