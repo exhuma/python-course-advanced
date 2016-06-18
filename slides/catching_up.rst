@@ -1,3 +1,5 @@
+.. include:: ../../common/rst_defs.rst
+
 Python Basic Recap
 ==================
 
