@@ -13,8 +13,7 @@ standard library also offers:
 * mocking (via ``unittest.mock`` in Python3.3+)
 
 Because it's Python, you can easily monkey-patch and fake/stub out existing
-functions as well instead of mocking. Especially if you don't need the tracking
-that is provided via mocks.
+functions as well instead of mocking.
 
 .. note::
 
