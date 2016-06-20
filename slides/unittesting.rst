@@ -214,8 +214,8 @@ Mocking with ``unittest.mock``
 Important classes/methods:
 
 * :py:class:`unittest.mock.MagicMock`
-* :py:fun:`unittest.mock.patch`
-* :py:fun:`unittest.mock.create_autospec`
+* :py:func:`unittest.mock.patch`
+* :py:func:`unittest.mock.create_autospec`
 
 Official `Quick Guide <https://docs.python.org/3/library/unittest.mock.html#quick-guide>`_
 
