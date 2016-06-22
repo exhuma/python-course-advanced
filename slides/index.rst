@@ -13,10 +13,10 @@ Topics
     catching_up
 
     unittesting
+    debugging
 
     object_model
     higher_order
-    debugging
 
     sqlalchemy
     parsing
@@ -28,10 +28,10 @@ Topics
 .. include:: catching_up.rst
 
 .. include:: unittesting.rst
+.. include:: debugging.rst
 
 .. include:: object_model.rst
 .. include:: higher_order.rst
-.. include:: debugging.rst
 
 .. include:: sqlalchemy.rst
 .. include:: parsing.rst
