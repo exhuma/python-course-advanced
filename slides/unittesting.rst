@@ -358,3 +358,36 @@ General Tips for Unit Testing
 * Use ``self.assertCountEqual`` to test contents of unsorted lists.
 * Save test-data in external files to keep your unit tests as small and
   readable as possible.
+
+.. nextslide::
+    :increment:
+
+* If it's hard to test, it may hint to bad design.
+
+* If it's hard to mock, it may also hint to bad design. Consider using DI/IOC.
+
+
+Personal Workflow
+-----------------
+
+* Store test modules in a separate directory.
+* Name each test_module ``test_<something>.py``.
+* Run tests using ``pytest`` + ``pytest-xdist`` using the following command::
+
+    $ py.test -rsf -f <test_folder>
+
+    # -rsf = "report skips and failures" (default is only failures)
+    # -f = loop on failing tests (from pytest-xdist)
+
+* Keep this window open at all times.
+
+.. nextslide::
+    :increment:
+
+* For each new unit-test, dump a ``self.fail('TODO')`` line at the end. This
+  triggers the "loop-on-fail" mechanism early and tests execute quickly.
+* Store larger data-sets (for both priming and "expectations") in external JSON
+  files.
+* On larger test-suites, I filter tests using ``-k`` in ``pytest`` often::
+
+    $ py.test -rsf -f <test_folder> -k keyword
