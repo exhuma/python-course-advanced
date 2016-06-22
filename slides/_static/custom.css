@@ -193,3 +193,11 @@ DIV.smaller PRE {
 H2 + IMG {
     margin-top: 40px;
 }
+
+#mastertoc {
+    font-size: 80%;
+}
+
+#mastertoc A {
+    text-decoration: none;
+}

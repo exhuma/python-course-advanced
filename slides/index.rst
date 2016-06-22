@@ -8,6 +8,7 @@ Topics
 
 .. toctree::
     :maxdepth: 1
+    :name: mastertoc
 
     catching_up
 
