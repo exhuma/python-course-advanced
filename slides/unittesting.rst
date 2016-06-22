@@ -297,6 +297,31 @@ Faking/Stubbing
 
             ...
 
+
+Faking/Stubbing (simplified)
+----------------------------
+
+.. code-block:: python
+
+    def test_stubbing(self):
+        with patch('a.b.c') as mck_obj:
+            mck_obj.amethod.side_effect = (val for val in [1, 2, 3])
+
+            ...
+
+.. nextslide::
+    :increment:
+
+Instead of assigning a function to ``side_effect``, this code assigns a
+"generator expression" to it.
+
+* Completely ignores any arguments passed to ``amethod``.
+* Each consecutive call, ``amethod`` returns the next value from the generator.
+* Stores the call details (f. ex.: ``amethod.mock_calls``)
+* If the method is called more often than there are values, a ``StopIteration``
+  may be raised.
+
+
 Verifying Calls on a Mock Object
 --------------------------------
 
