@@ -1,5 +1,5 @@
-Debugging
-=========
+Debugging & Profiling
+=====================
 
 
 Code With Error
@@ -196,3 +196,112 @@ Wiki-Page About Debugging
 https://wiki.python.org/moin/PythonDebuggingTools
 
 .. TODO * The code of the Standard Library
+
+
+Profiling
+---------
+
+Profiling lets you find bottle-necks in your code. If something is running too
+slow you may want to run a profiler.
+
+
+cProfile
+--------
+
+* Included in the standard library.
+* Easy to use for simple profiling.
+
+Simple use-case::
+
+    $ python -m cProfile script.py
+
+.. hint::
+
+    It's often worthwile to write a small ``script.py`` file which runs the
+    code you want to profile. This makes it easy to run using ``-m cProfile``
+
+cProfile Output
+---------------
+
+.. code-block:: text
+    :class: smaller
+
+             1610 function calls (1586 primitive calls) in 0.450 seconds
+
+       Ordered by: standard name
+
+       ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+            6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:119(release)
+            6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:159(__init__)
+            6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:163(__enter__)
+            6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:170(__exit__)
+            6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:176(_get_module_lock)
+            6    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:190(cb)
+          6/1    0.000    0.000    0.006    0.006 <frozen importlib._bootstrap>:214(_call_with_frames_removed)
+            3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:225(_verbose_message)
+            1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:235(_requires_builtin_wrapper)
+            3    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:310(__init__)
+
+.. nextslide::
+    :increment:
+
+**ncalls**
+    for the number of calls,
+**tottime**
+    for the total time spent in the given function (and excluding time made in
+    calls to sub-functions)
+**percall**
+    is the quotient of tottime divided by ncalls
+**cumtime**
+    is the cumulative time spent in this and all subfunctions (from invocation
+    till exit). This figure is accurate even for recursive functions.
+
+.. nextslide::
+    :increment:
+
+**percall**
+    is the quotient of cumtime divided by primitive calls
+**filename:lineno(function)**
+    provides the respective data of each function
+
+cProfile CLI Arguments
+----------------------
+
+Full synopsis::
+
+    python -m cProfile [-o output_file] [-s sort_order] myscript.py
+
+**output_file**
+    Saves the statistics to a filename which can then be analyzed (manually)
+    using :py:mod:`pstats`
+
+**sort_order**
+    Field by which to sort the results. See :py:meth:`pstats.Stats.sort_stats`
+    for a list of avaibalbe names.
+
+
+Profiling with pycallgraph
+--------------------------
+
+.. figure:: _static/pycallgraph.png
+    :align: right
+    :height: 500px
+
+    pycallgraph & graphviz
+
+``pycallgraph`` is a third-party module which is able to generate call-graphs
+using ``graphviz`` (you ned to have it installed). It can also create output
+for a tool called ``gephi``. Example call::
+
+    pycallgraph -i "random.*" \
+        graphviz -- foo.py
+
+.. nextslide::
+    :increment:
+
+* *Huge* overhead!
+
+  * When profiling try to elimilnate as much as unneccessary code as possible.
+
+* Nodes colorised by time they took to complete. Red/Violet nodes = bottlenecks.
+* Eliminate graph nodes by using ``--include`` and ``--exclude``.
