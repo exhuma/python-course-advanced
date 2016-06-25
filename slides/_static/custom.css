@@ -16,6 +16,9 @@ pre {
 
 DIV.highlight {
     background: rgba(255, 255, 255, 0.7);
+}
+
+DIV.highlight PRE {
     box-shadow: 3px 3px 5px rgba(0, 0, 0, .4);
 }
 
