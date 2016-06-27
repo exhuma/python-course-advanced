@@ -33,7 +33,7 @@ SQLAlchemy
   * Core
 
 * Helps DB development at any level.
-* Consistent API across DB engines (|ell| ehm |ell|)
+* Consistent API across DB engines (within limits)
 
 .. note::
     While the *API* is consistent, you still have to decide whether to use DB
