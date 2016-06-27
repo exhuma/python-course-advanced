@@ -53,25 +53,41 @@ SQLAlchemy
 ORM Advantages / Disadvantages
 ------------------------------
 
-* No need to index columns.
-* Method chaining for adding filters (``WHERE``).
-* Less SQL to write.
+* A lot less SQL to write.
+* Possibility to build your query step-by-step.
+* *Can* be database agnostic.
+* Map Python classes to Business objects.
+* May generate suboptimal SQL queries:
+
+  * **n+1 problem** (Prevent using `Eager Loading`_).
+  * **No Index-Only scans** (Prevent using `Load Only Cols`_).
+
+
+.. _Load Only Cols: http://docs.sqlalchemy.org/en/latest/orm/loading_columns.html#load-only-cols
+.. _Eager Loading: http://docs.sqlalchemy.org/en/latest/orm/tutorial.html#eager-loading
 
 
 Example Mapping
 ---------------
 
-::
+.. hint::
 
-    from sqlalchemy import String, Unicode
-    from sqlalchemy.ext.declaratvie import Base
+    To map a table it must be at least 1NF (possible workarounds: the
+    PostrgeSQL Array, JSON or hstore type).
+
+.. code-block:: python
+
+    from sqlalchemy import String, Unicode, Column
+    from sqlalchemy.ext.declarative import declarative_base
+
+    Base = declarative_base()
 
     class User(Base):
         __tablename__ = 'user'
 
-        email = String(primary_key=True)
-        name = Unicode()
-        telephone_number = String()
+        email = Column(String, primary_key=True)
+        name = Column(Unicode)
+        telephone_number = Column(String)
 
 .. note::
     "Declarative" was implemented as SQLAlchemy *extension*. It has since
@@ -86,65 +102,158 @@ Example Mapping
     Both approaches can also be used together without problem.
 
 
-Hands On
+Usage
+-----
+
+.. code-block:: python
+
+    from sqlalchemy import create_engine
+    engine = create_engine('sqlite:///:memory:', echo=True)
+    Base.metadata.create_all(engine)
+
+    Session = sessionmaker(bind=engine)
+
+    session = Session()
+    user = User(email='user@example.com',
+                name='Example User')
+    session.add(user)
+    session.commit()
+
+
+The Session
+-----------
+
+See `Session Basics <http://docs.sqlalchemy.org/en/latest/orm/session_basics.html>`_
+
+* implements the well known `Unit of Work`_ pattern.
+* Holds objects in different states (The Entity Lifecycle).
+* Not thread-safe (wrap in ``scoped_session`` for this use-case.
+* Some actions trigger automatic "flushing" (``session.autoflush``).
+* Can be created/closed often (lightweight)
+
+
+.. _Unit of Work: http://martinfowler.com/eaaCatalog/unitOfWork.html
+
+
+Querying
 --------
 
+* ``session.query(User)`` creates a basic ``SELECT`` query without filters or
+  orderings (``SELECT * FROM user``).
+* ``query = query.filter(User.name == 'John')`` creates a new query with an
+  added ``WHERE`` clause.
+* ``query = query.filter(or_(User.name == 'John', User.name == 'Jane'))``.
+* Calls to query methods (``.filter()``, ``.order()``, ``.group_by``, |ell|)
+  can be chained. They usually do not modify an existing query object.
 
-A new Wiki Page
----------------
+Selecting and Editing
+---------------------
 
-.. note:: Complete Source
+.. code-block:: python
 
-    .. code-block:: python
-        :caption: wiki/storage/sqla.py
+    query = session.query(User).filter_by(email='user@example.com')
+    user = query.one()
+    user.name = 'Updated name'
+    session.commit()
 
-        from sqlalchemy.declarative import Base
-        from sqlalchemy import Unicode
+**Common Gotcha**
 
-        from wiki.model import WikiPage
+.. code-block:: python
 
-
-        class DBWikiPage(WikiPage, Base):
-            title = Unicode(size=100)
-            content = Unicode()
+    user = User(email='user@example.com', name='Another update?')
+    session.add(user)
+    session.commit()
 
 
-        class SAStorage:
+Entity Lifecycle
+----------------
 
-            def __init__(self, sessionmaker):
-                self.__sessionmaker = sessionmaker
+See `Session Management <http://docs.sqlalchemy.org/en/latest/orm/session_state_management.html>`_
 
-            def init(self):
-                self.__sessionmaker.create_all()
+*transient*
+  The object has been newly created (exists in memory) and is not yet in the
+  session.
 
-            def close(self):
-                pass  # TODO do we need to do something here?
+*pending*
+  The object is changed in memory but that has not yet been flushed to the
+  database.
 
-            def save(self, document):
-                session = self.__sessionmaker()
-                session.add(document)
-                session.commit()
-                session.close()
+*persistent*
+  The object exists in memory and changes have been recorded to the database.
 
-            def load(self, title):
-                session = self.__sessionmaker()
-                query = session.query(Page)
-                query = query.filter_by(title=title)
-                page = query.one()
-                session.close()
-                return page
+*detached*
+  The object exists in memory, but is no longer attached to the database.
 
-            def list(self):
-                session = self.__sessionmaker()
-                titles = session.query([WikiPage.title])
-                session.close()
-                return titles
+
+Updating with transient/detached entities
+-----------------------------------------
+
+.. code-block:: python
+
+    user = User(email='user@example.com', name='Another update?')
+    new_user = session.merge(user)
+    session.commit()
+
+
+Example Relationships
+---------------------
+
+.. code-block:: python
+    :class: smaller
+
+    # ... imports ...
+
+    class Port(Base):
+        __tablename__ = 'port'
+
+        hostname = Column(String, ForeignKey('device.hostname'),
+                          primary_key=True)
+        label = Column(String, primary_key=True)
+
+
+    class Device(Base):
+        __tablename__ = 'device'
+
+        hostname = Column(String, primary_key=True)
+
+        ports = relationship('Port')
+
+
+.. nextslide::
+    :increment:
+
+.. code-block:: python
+
+    dev = Device(hostname='MyDevice')
+    dev.ports.extend([
+        Port(label='1/1'),
+        Port(label='1/2'),
+        Port(label='1/3')
+    ])
+    session.add(dev)
+    session.commit()
+
+    for port in dev.ports:
+        print(port)
+
+    session.delete(dev.ports[1])
+    session.commit()
+
+    for port in dev.ports:
+        print(port)
 
 
 Reflection (Introspection)
 --------------------------
 
-::
+* Useful if you have an existing database
+* Will load only the database items:
+
+  * FKs are imported, SA relationships is still up to you!
+
+Example:
+
+.. code-block:: python
 
     class User(Base):
         __tablename__ = 'user'
@@ -163,55 +272,38 @@ See `table configuration`_
     fairly safe to use.
 
 
-The Session
------------
+Example SQL Queries
+-------------------
 
-* implements the well known `Unit of Work`_ pattern.
-* Holds objects in different states (The Entity Lifecycle).
+.. code-block:: python
+    :class: smaller
 
-Entity Lifecycle
-~~~~~~~~~~~~~~~~
+    session.execute('SELECT x+10 FROM data')
+    session.query(Data.x + 10)
 
-*transient*
-  The object has been newly created (exists in memory) and is not yet in the
-  session.
+    session.execute('SELECT x, NOW() FROM data')
+    session.query(Data.x, func.now())
 
-*pending*
-  The object is changed in memory but that has not yet been flushed to the
-  database.
+    session.execute('SELECT blablabla(1, 2, 3) FROM data')
+    session.query(func.blablabla(1, 2, 3))
 
-*persistent*
-  The object exists in memory and changes have been recorded to the database.
+    session.execute('UPDATE data SET x = x * 2 WHERE x > 10')
+    session.query(Data.x).filter(Data.x > 10).update({
+        'x': Data.x*2
+    })
 
-*detached*
-  The object exists in memory, but is no longer attached to the database.
+    session.execute('DELETE FROM data WHERE x > 10')
+    session.query(Data.x).filter(Data.x > 10).delete()
 
-
-.. _Unit of Work: http://martinfowler.com/eaaCatalog/unitOfWork.html
-
-
-Querying
---------
-
-* ``session.query(User)`` creates a basic ``SELECT`` query without filters or
-  orderings (``SELECT * FROM user``).
-* ``query = query.filter(User.name == 'John')`` creates a new query with an
-  added ``WHERE`` clause.
-* ``query = query.filter(or_(User.name == 'John', User.name == 'Jane'))``.
-* Calls to query methods (``.filter()``, ``.order()``, ``.group_by``, |ell|)
-  can be chained. They usually do not modify an existing query object.
-
-
-
-
+    # If all else fails...
+    query = text('DELETE FROM data WHERE x > :value')
+    session.execute(query.bindparams(value=10))
 
 
 .. TODO * Reflection Table(autoload=True, autoload_with)
 .. TODO   * Inspector
 .. TODO * Alembic
 .. TODO * SQL
-.. TODO   x + 10
-.. TODO   x + 'hello'
 .. TODO   * Bound placeholders
 .. TODO     expr = x.c.name == 10
 .. TODO     compiled = expr.compile(<dialect>)
@@ -278,10 +370,7 @@ Querying
 .. TODO * primary key needed in ORM
 .. TODO * Creating
 .. TODO * Selecting (one/first)
-.. TODO * Lifecycle - transient - pending - persistent - detached
 .. TODO * Lazy/Eager Loading (relationships)
 .. TODO * Joins
-.. TODO * To map a table it must be at least 1NF
 .. TODO * alembic instead of ``create_all``
 .. TODO http://docs.sqlalchemy.org/en/rel_1_0/orm/tutorial.html
-.. TODO 
