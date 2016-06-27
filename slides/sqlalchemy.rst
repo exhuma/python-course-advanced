@@ -1,10 +1,3 @@
-.. http://www.slideshare.net/mengukagan/an-introduction-to-sqlalchemy
-.. https://www.youtube.com/watch?v=P141KRbxVKc&t=2h58m
-.. TODO -> Read about "leaky abstraction"
-.. TODO Add architecture graph, explain the elements.
-.. SA Unit Testing: http://docs.sqlalchemy.org/en/latest/orm/session_transaction.html#joining-a-session-into-an-external-transaction-such-as-for-test-suites
-.. transactions (engine is in autocommit vs UOW)
-
 Databases & SQLAlchemy
 ======================
 
@@ -344,6 +337,11 @@ Useful Links
 * `Unit Testing with SA <http://docs.sqlalchemy.org/en/latest/orm/tutorial.html?highlight=joinedload#eager-loading>`_
 * `Introduction by the creator of SA <https://www.youtube.com/watch?v=P141KRbxVKc>`_ *(over 3 hour video!)*
 
+.. http://www.slideshare.net/mengukagan/an-introduction-to-sqlalchemy
+.. TODO -> Read about "leaky abstraction"
+.. TODO Add architecture graph, explain the elements.
+.. transactions (engine is in autocommit vs UOW)
+
 .. TODO * Reflection Table(autoload=True, autoload_with)
 .. TODO   * Inspector
 .. TODO * Alembic
@@ -374,11 +372,6 @@ Useful Links
 .. TODO * Once data is loaded in memory it will not reloaded (unless explicitly specified, or session closed/committed).
 .. TODO * Default = Connection Pool, Can be used without one.
 .. TODO * Use objects instead of FKs when working with relationships (works both ways, but when editing FKs, the ORM will be unaware). Will get complicated if you cannot commit the TX mid-way.
-.. TODO * N+1 Problem
-.. TODO   * subqueryload
-.. TODO   * joinedload
-.. TODO   * contains_eager
-.. TODO 
 .. TODO .. My History {{{
 .. TODO 
 .. TODO My History
