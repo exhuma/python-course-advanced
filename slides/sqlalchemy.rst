@@ -300,6 +300,50 @@ Example SQL Queries
     session.execute(query.bindparams(value=10))
 
 
+Other Highlights
+----------------
+
+**Custom data types**
+
+If SQLAlchemy does not have existing support for a special data type in your
+database, you can `build your own`_.
+
+**Call any function**
+
+Using the ``func`` function, you can call any database function and properly
+bind values::
+
+    session.query(Data).filter(func.sqrt(25) > Data.x)
+
+.. nextslide::
+    :increment:
+
+**Use any operator**
+
+Similarly to ``func``, you can use the ``op`` function to use any DB operator,
+even if not foreseen by SQLAlchemy::
+
+    session.query(Data).filter(Point(10, 20).op('<@')(Data.area))
+
+|ell| generally:
+
+.. code-block:: text
+
+    <LHS>.op('<operator>')(<RHS>)
+
+.. _build your own: http://docs.sqlalchemy.org/en/latest/core/custom_types.html
+
+
+Useful Links
+------------
+
+* `Official SQLAlchemy Homepage <http://www.sqlalchemy.org/>`_
+
+  * `Official Documentation <http://docs.sqlalchemy.org/en/rel_1_0/>`_
+
+* `Unit Testing with SA <http://docs.sqlalchemy.org/en/latest/orm/tutorial.html?highlight=joinedload#eager-loading>`_
+* `Introduction by the creator of SA <https://www.youtube.com/watch?v=P141KRbxVKc>`_ *(over 3 hour video!)*
+
 .. TODO * Reflection Table(autoload=True, autoload_with)
 .. TODO   * Inspector
 .. TODO * Alembic
