@@ -65,7 +65,7 @@ A simple Unit Test
             self.assertEqual(1, 2)
 
         def test_example_pass(self):
-            self. assertEqual(1, 1)
+            self.assertEqual(1, 1)
 
 
 Run the test using::
@@ -102,9 +102,9 @@ Example:
 
 Other ways to setup your tests:
 
-* ``setupClass``
+* ``setUpClass``
 * ``tearDownClass``
-* ``setupModule``
+* ``setUpModule``
 * ``tearDownModule``
 
 .. warning::
@@ -204,7 +204,7 @@ py.test loop failures example
 
 ::
 
-    py.text -f mymoduletest.py
+    py.test -f mymoduletest.py
 
 
 Mocking with ``unittest.mock``
@@ -237,7 +237,7 @@ Testing the above function has several challenges:
 * Executing it will be slow (network access)
 * The return value may be **out of your control**
 
-    * Someone else may change the hosntame.
+    * Someone else may change the hostname.
     * Security (SNMP credentials, firewall) considerations.
 
 
@@ -344,7 +344,7 @@ General Tips for Unit Testing
 * Use a ``self.fail('TODO')`` as final instruction in a unit test to make use
   of the "loop on failing" feature of "py.test" while working on the test.
   Remove it when done
-* Use a simplg ``raise`` statement inside your code to trigger failures to best
+* Use a simple ``raise`` statement inside your code to trigger failures to best
   utilize the "loop on failing" feature. Remove it when done.
 
 .. nextslide::
