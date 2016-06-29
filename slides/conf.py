@@ -295,4 +295,4 @@ slide_link_html_to_slides = True
 
 
 # Example configuration for intersphinx: refer to the Python standard library.
-# TODO intersphinx_mapping = {'http://docs.python.org/': None}
+intersphinx_mapping = {'http://docs.python.org/3/': None}
