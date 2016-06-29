@@ -29,22 +29,6 @@ Code With Error
         main()
 
 
-Stack Traces
-------------
-
-.. code-block:: python
-
-    Traceback (most recent call last):
-      File "foo.py", line 19, in <module>
-        main()
-      File "foo.py", line 16, in main
-        func_a(app)
-      File "foo.py", line 11, in func_a
-        print(instance.calc())
-      File "foo.py", line 7, in calc
-        return self._a + self._b
-    TypeError: Can't convert 'int' object to str implicitly
-
 Post Mortem Debugging
 ---------------------
 
