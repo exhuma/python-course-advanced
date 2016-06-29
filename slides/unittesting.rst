@@ -298,12 +298,30 @@ Faking/Stubbing
             ...
 
 
-Faking/Stubbing (simplified)
-----------------------------
+Faking/Stubbing (with generators)
+---------------------------------
 
 .. code-block:: python
+    :class: smaller
 
-    def test_stubbing(self):
+    def test_stubbing_a(self):
+
+        def my_generator(*args, **kwargs):
+            yield 1
+            yield 2
+            yield 3
+
+        with patch('a.b.c') as mck_obj:
+            mck_obj.amethod.side_effect = my_generator
+
+        ...
+
+... is equivalent to:
+
+.. code-block:: python
+    :class: smaller
+
+    def test_stubbing_b(self):
         with patch('a.b.c') as mck_obj:
             mck_obj.amethod.side_effect = (val for val in [1, 2, 3])
 
@@ -313,13 +331,33 @@ Faking/Stubbing (simplified)
     :increment:
 
 Instead of assigning a function to ``side_effect``, this code assigns a
-"generator expression" to it.
+generator to it.
 
-* Completely ignores any arguments passed to ``amethod``.
+* If used as generator expression: completely ignores any arguments passed to
+  ``amethod``.
 * Each consecutive call, ``amethod`` returns the next value from the generator.
 * Stores the call details (f. ex.: ``amethod.mock_calls``)
 * If the method is called more often than there are values, a ``StopIteration``
   may be raised.
+
+
+Faking Any Class
+----------------
+
+``MagicMock`` and ``create_autospec`` allow you to create a "magic" instance
+which accepts any calls. This can be quite handy for DI/IOC.
+
+.. code-block:: python
+
+    def test_interfaces(self):
+        from mymodel import get_interfaces
+        fake_device = object()
+        mocked_snmp = MagicMock()
+        mocked_snmp.walk.return_value = [1, 2, 3]
+        result = get_interfaces(mocked_snmp, fake_device)
+        mocked_snmp.walk.assert_called_with('1.3.6.1.2.1.2.2')
+        # ... and verify the contents of "result"
+
 
 
 Verifying Calls on a Mock Object
