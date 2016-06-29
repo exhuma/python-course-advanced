@@ -199,6 +199,60 @@ Magic Methods Example (ctd)
             print('__contains__ called')
 
 
+Exercise
+--------
+
+* Create a new class called ``CustomClass``. The class should:
+
+  * |ell| be instantiated with a simple 1-dimensional dictionary (a key/value
+    mapping).
+  * |ell| store the dictionary in it's instance.
+  * |ell| allow read-only access to dictionary keys
+  * |ell| be comparable to instances of the same type. It should return
+    ``True`` if all key/value pairs are the same.
+
+.. nextslide::
+    :increment:
+
+.. code-block:: python
+    :class: tinycode
+
+    def test_instantiation(self):
+        CustomClass({'a': 1, 'b': 2})
+
+    def test_read_access(self):
+        instance = CustomClass({'a': 1, 'b': 2})
+        result = instance['a']
+        self.assertEqual(result, 1)
+
+    def test_write_access(self):
+        instance = CustomClass({'a': 1, 'b': 2})
+        with self.assertRaises(AttributeError):
+            instance['a'] = 10
+
+    def test_comparison_a(self):
+        a = CustomClass({'a': 1, 'b': 2})
+        b = CustomClass({'a': 1, 'b': 2})
+        self.assertEqual(a, b)
+
+    def test_comparison_b(self):
+        a = CustomClass({'a': 1, 'b': 2})
+        b = CustomClass({'b': 1, 'a': 2})
+        self.assertEqual(a, b)
+
+    def test_comparison_c(self):
+        a = CustomClass({'a': 1, 'b': 2})
+        b = CustomClass({'b': 2, 'a': 3})
+        self.assertNotEqual(a, b)
+
+    def test_mutability(self):
+        mapping = {'a': 1, 'b': 2}
+        instance = CustomClass(mapping)
+        mapping['a'] = 10
+        result = instance['a']
+        self.assertEqual(result, 1)
+
+
 Hashable Classes
 ----------------
 
@@ -247,6 +301,16 @@ implement ``__hash__`` you will see the following error:
 
     For more details, see the `official docs
     <https://docs.python.org/3/reference/datamodel.html#object.__hash__>`_.
+
+
+Exercise: Hashable Classes
+--------------------------
+
+* Try to add instances of your class to a set.
+* |ell| how about keys in dictionaries?
+* Make your class hasheable.
+* Retry the first two points.
+* **Question:** Why is okay to make this class hashable?
 
 
 Slots
@@ -304,6 +368,20 @@ Using the descriptor from the previous slide:
     print(inst.foo)
     print(inst.bar)
     inst.bar = 100
+
+
+Exercise: Descriptors
+---------------------
+
+
+* Write a descriptor ``RoValue``.
+* this descriptor should only allow reading values. Not setting them!.
+* When setting a value it should throw an ``AttributeError``.
+
+.. hint::
+
+    This use-case is already covered via the ``@property`` decorator. This is
+    only an illustrative exercise.
 
 
 Metaclasses

@@ -68,6 +68,7 @@ Example: Timing Functions
 
 .. code-block:: python
     :class: smaller
+    :emphasize-lines: 7
 
     from datetime import datetime
 
@@ -137,11 +138,22 @@ Decorators
 
 With the ``@``-syntax, the previous code can be rewritten as:
 
+
 .. code-block:: python
+    :class: smaller
 
     @timed
     def hello():
         print("Hello World!")
+
+Is equivalent with:
+
+.. code-block:: python
+    :class: smaller
+
+    def hello():
+        print("Hello World!")
+    hello = timed(hello)
 
 
 Parametrized Decorators
@@ -161,6 +173,14 @@ decorator.
                 pass  # Implement the decorator
             return fun
         return decorator
+
+
+Exercise: Parametrized Decorator
+--------------------------------
+
+* Take the ``timed`` decorator from the earlier slides.
+* Change it so that the *decorator* takes a "prefix" argument.
+* Each time you print the timing info, prefix it with that argument.
 
 
 Lambda Expressions in Python

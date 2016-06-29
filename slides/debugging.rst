@@ -32,6 +32,8 @@ Code With Error
 Post Mortem Debugging
 ---------------------
 
+Run the above code with: ``python -m pdb foo.py``
+
 .. code-block:: text
     :class: smaller
     :emphasize-lines: 1, 16-17
@@ -56,6 +58,21 @@ Post Mortem Debugging
     > /tmp/foo.py(7)calc()
     -> return self._a + self._b
     (pdb)
+
+
+.. nextslide::
+    :increment:
+
+Quick inspection:
+
+``ll``
+    print the code-listing of the current scope (only in Python 3)
+
+``pp locals()``
+    pretty-print all local variables
+
+``pp vars(something)``
+    pretty-print all variables defined on *something*
 
 
 Hard Coded Breakpoint
@@ -132,6 +149,24 @@ Interactive Debugger Commands
     bt     continue   exit     l         pp        run      unalias  where
 
 
+.. rst-class:: smaller-slide
+
+Exercise: Debugging the Standard Library
+----------------------------------------
+
+* Write a script that makes use of *any* standard library module. Some examples:
+
+  * :py:mod:`ipaddress`
+  * :py:mod:`logging`
+  * :py:mod:`os`
+
+* Run the script with ``-m pdb``
+* Manually set a breakpoint to the function you are using.
+* Run the script with ``c``
+* Once the breakpoint is hit, experiment with ``where``, ``up``, ``down``,
+  ``ll`` and ``pp``.
+
+
 Alternative Debuggers: ipdb
 ---------------------------
 
@@ -188,6 +223,25 @@ Profiling
 Profiling lets you find bottle-necks in your code. If something is running too
 slow you may want to run a profiler.
 
+
+Example Script for Profiling
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+    import logging
+    from random import randint
+
+
+    def foo():
+        for i in range(1000):
+            if i % 2 == 0:
+                print(randint(0, i))
+            logging.debug('Hello %r', i)
+
+
+    if __name__ == '__main__':
+        foo()
 
 cProfile
 --------
