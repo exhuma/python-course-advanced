@@ -204,3 +204,7 @@ H2 + IMG {
 #mastertoc A {
     text-decoration: none;
 }
+
+ARTICLE.smaller-slide {
+    font-size: 90%;
+}
