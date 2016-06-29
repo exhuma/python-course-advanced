@@ -73,6 +73,22 @@ Run the test using::
     python -m unittest
 
 
+Exercise: Simple Unit Tests
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Write a test-case (``test_mymodule.py``) which does the following:
+
+  * Imports the function ``msum`` from ``mymodule``
+  * Tests the following cases:
+
+    * ``msum()`` should return ``0``
+    * ``msum(1)`` should return ``1``
+    * ``msum(1, 2)`` should return ``3``
+
+* Write the module ``mymodule.py`` with the function ``msum``.
+* Run the tests.
+
+
 Priming Tests / Fixtures
 ------------------------
 
@@ -157,54 +173,24 @@ py.test
     * killer-feature: **automatically rerun failed tests**
 
 
-py.test loop failures example
------------------------------
+Exercise: py.test
+~~~~~~~~~~~~~~~~~
 
-.. code-block:: python
-    :caption: mymoduletest.py
-    :class: smaller
+* Install ``py.test`` with the "xdist" plugin:
 
-    import unittest
-    from mymodule import func_1, func_2, func_3
+    .. code-block:: text
 
+        pip install --user pytest pytest-xdist
+        ./env/bin/pip install pytest pytest-xdist
 
-    class TestPyTest(unittest.testCase):
+* Run the tests using the loop-on-failing option:
 
-        def test_func_1(self):
-            result = func_1(1, 2)
-            expected = 3
-            self.assertEqual(result, expected)
+    .. code-block:: text
 
-        def test_func_2(self):
-            result = func_2(1, 2)
-            expected = 2
-            self.assertEqual(result, expected)
+        py.test -f testmodule.py
 
-        def test_func_3(self):
-            result = func_3(1, 2)
-            expected = -1
-            self.assertEqual(result, expected)
-
-.. nextslide::
-    :increment:
-
-.. code-block:: python
-    :caption: mymodule.py
-
-    def func_1(a, b):
-        return a + b
-
-    def func_2(a, b):
-        return a * b
-
-    def func_3(a, b):
-        return a - b
-
-**py.test execution**
-
-::
-
-    py.test -f mymoduletest.py
+* While keeping this running, introduce a bug in your implementation of
+  ``msum``.
 
 
 Mocking with ``unittest.mock``
@@ -280,8 +266,44 @@ context-manager.
 The above code demonstrates simulating exceptions using a ``Mock`` instance.
 
 
+.. nextslide::
+    :increment:
+
+.. warning::
+
+    The argument to :py:func:`~unittest.mock.patch` represents the "import
+    name" *relative to the test-case module*!
+
+
+For example, consider the following module:
+
+.. code-block:: python
+    :caption: core.py
+
+    from telnetlib import Telnet
+
+    connection = Telnet(...)
+
+In this case the name used for patching is ``core.Telnet``. **NOT** ``telnetlib.Telnet``!
+
+
 Faking/Stubbing
 ---------------
+
+* "faking" and "stubbing" is the process of replacing an existing function with
+  a non-production ready replacement.
+* The difference between a "fake" and a "stub" is the degree by how *far* they
+  are implemented.
+
+While you can monkey-patch with standard Python, using :py:mod:`unittest.mock`
+will give you call tracing for free.
+
+To replace a mocked function with a custom function, you assign that function
+to ``side_effect``.
+
+
+.. nextslide::
+    :increment:
 
 .. code-block:: python
 
@@ -302,6 +324,20 @@ Faking/Stubbing
 
 Faking/Stubbing (with generators)
 ---------------------------------
+
+Instead of assigning a function to ``side_effect``, you can assign a generator
+to it.
+
+* If used as generator expression: completely ignores any arguments passed to
+  ``amethod``.
+* Each consecutive call, ``amethod`` returns the next value from the generator.
+* Stores the call details (f. ex.: ``amethod.mock_calls``)
+* If the method is called more often than there are values, a ``StopIteration``
+  may be raised.
+
+
+.. nextslide::
+    :increment:
 
 .. code-block:: python
     :class: smaller
@@ -328,20 +364,6 @@ Faking/Stubbing (with generators)
             mck_obj.amethod.side_effect = (val for val in [1, 2, 3])
 
             ...
-
-.. nextslide::
-    :increment:
-
-Instead of assigning a function to ``side_effect``, this code assigns a
-generator to it.
-
-* If used as generator expression: completely ignores any arguments passed to
-  ``amethod``.
-* Each consecutive call, ``amethod`` returns the next value from the generator.
-* Stores the call details (f. ex.: ``amethod.mock_calls``)
-* If the method is called more often than there are values, a ``StopIteration``
-  may be raised.
-
 
 Faking Any Class
 ----------------
@@ -427,7 +449,7 @@ Personal Workflow
 * For each new unit-test, dump a ``self.fail('TODO')`` line at the end. This
   triggers the "loop-on-fail" mechanism early and tests execute quickly.
 * Store larger data-sets (for both priming and "expectations") in external JSON
-  files.
+  (or even YAML) files.
 * On larger test-suites, I filter tests using ``-k`` in ``pytest`` often::
 
     $ py.test -rsf -f <test_folder> -k keyword
