@@ -219,6 +219,8 @@ Important classes/methods:
 Official `Quick Guide <https://docs.python.org/3/library/unittest.mock.html#quick-guide>`_
 
 
+.. rst-class:: smaller-slide
+
 Example Mocking
 ---------------
 
@@ -261,7 +263,7 @@ Testing the above function has several challenges:
         self.assertEqual(result, expected)
 
 The above code demonstrates "monkey-patching" using the ``patch``
-context-manager..
+context-manager.
 
 .. nextslide::
     :increment:

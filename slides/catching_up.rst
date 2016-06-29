@@ -67,10 +67,10 @@ Variadic functions
 
 .. slide:: Exercise
 
-    Write a function that takes any number of arguments, *and* any number of
-    keyword arguments. It should return the sum of the arguments (positional
-    and keyword). Use the *values* of the keyword arguments to calculate the
-    sum::
+    Write a function ``msum`` that takes any number of arguments, *and* any
+    number of keyword arguments. It should return the sum of the arguments
+    (positional and keyword). Use the *values* of the keyword arguments to
+    calculate the sum::
 
         assert(msum(10) == 10)
         assert(msum(a=10) == 10)
