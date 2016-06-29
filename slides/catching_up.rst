@@ -100,15 +100,11 @@ It is possible to call it in the following ways::
     The second example shows that the arguments can be mixed.
 
 
-Example use-case: Delegator Function
-------------------------------------
+Exercise: Delegator Function
+----------------------------
 
+Write a function which takes one fixed argument: username. It should also take
+any number of positional and keyword arguments.
 
-.. code-block:: python
-
-    from snmp import walk
-
-    def send_snmp_command(username, *args, **kwargs):
-        LOG.info('%s is executing SNMP-Walk: walk(*%r, **%r)',
-            username, args, kwargs)
-        walk(*args, **kwargs)
+Use this function to print the username, and then delegate the rest of the
+arguments to :py:func:`logging.debug`.
