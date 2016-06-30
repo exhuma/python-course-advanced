@@ -158,6 +158,8 @@ Selecting and Editing
     session.commit()
 
 
+.. rst-class:: smaller-slide
+
 Entity Lifecycle
 ----------------
 
