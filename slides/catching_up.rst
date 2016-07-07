@@ -108,3 +108,24 @@ any number of positional and keyword arguments.
 
 Use this function to print the username, and then delegate the rest of the
 arguments to :py:func:`logging.debug`.
+
+
+Relative Imports
+----------------
+
+*Example*
+
+.. code-block:: text
+
+    myapp/
+      +-- sub1
+      |    +-- sub2
+      |         +-- sys.py
+      |         +-- somemodule.py
+      +-- types.py
+
+.. code-block:: python
+    :caption: somemodule.py
+
+    from .sys import hello_world
+    from ...types import goodbye_world
