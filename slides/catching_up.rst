@@ -103,11 +103,15 @@ It is possible to call it in the following ways::
 Exercise: Delegator Function
 ----------------------------
 
-Write a function which takes one fixed argument: username. It should also take
-any number of positional and keyword arguments.
+Write a function ``mylog`` which takes one fixed argument: username. It should
+also take any number of positional and keyword arguments.
 
 Use this function to print the username, and then delegate the rest of the
-arguments to :py:func:`logging.debug`.
+arguments to :py:func:`logging.warning`.
+
+The following call should work::
+
+    mylog('malbert', 'This is the log message', exc_info=True)
 
 
 Relative Imports
