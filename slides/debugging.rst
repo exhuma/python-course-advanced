@@ -251,7 +251,7 @@ cProfile
 
 Simple use-case::
 
-    $ python -m cProfile script.py
+    $ python -m cProfile -s cumtime script.py
 
 .. hint::
 
