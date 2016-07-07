@@ -207,7 +207,7 @@ Exercise
   * |ell| be instantiated with a simple 1-dimensional dictionary (a key/value
     mapping).
   * |ell| store the dictionary in it's instance.
-  * |ell| allow read-only access to dictionary keys
+  * |ell| allow read-only access to dictionary keys.
   * |ell| be comparable to instances of the same type. It should return
     ``True`` if all key/value pairs are the same.
 
