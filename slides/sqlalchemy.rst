@@ -55,6 +55,8 @@ ORM Advantages / Disadvantages
   * **n+1 problem** (Prevent using `Eager Loading`_).
   * **No Index-Only scans** (Prevent using `Load Only Cols`_).
 
+* New Syntax to learn!
+
 
 .. _Load Only Cols: http://docs.sqlalchemy.org/en/latest/orm/loading_columns.html#load-only-cols
 .. _Eager Loading: http://docs.sqlalchemy.org/en/latest/orm/tutorial.html#eager-loading
@@ -112,13 +114,17 @@ Usage
     session.add(user)
     session.commit()
 
+See the `engine documentation
+<http://docs.sqlalchemy.org/en/latest/core/engines.html>`_ for details on the
+engine arguments.
+
 
 The Session
 -----------
 
 See `Session Basics <http://docs.sqlalchemy.org/en/latest/orm/session_basics.html>`_
 
-* implements the well known `Unit of Work`_ pattern.
+* implements the `Unit of Work`_ pattern.
 * Holds objects in different states (The Entity Lifecycle).
 * Not thread-safe (wrap in ``scoped_session`` for this use-case.
 * Some actions trigger automatic "flushing" (``session.autoflush``).
@@ -131,13 +137,22 @@ See `Session Basics <http://docs.sqlalchemy.org/en/latest/orm/session_basics.htm
 Querying
 --------
 
-* ``session.query(User)`` creates a basic ``SELECT`` query without filters or
-  orderings (``SELECT * FROM user``).
-* ``query = query.filter(User.name == 'John')`` creates a new query with an
-  added ``WHERE`` clause.
-* ``query = query.filter(or_(User.name == 'John', User.name == 'Jane'))``.
-* Calls to query methods (``.filter()``, ``.order()``, ``.group_by``, |ell|)
-  can be chained. They usually do not modify an existing query object.
+.. code-block:: python
+
+    session.query(User) # creates a basic ``SELECT`` query without filters or
+                        # orderings (``SELECT * FROM user``).
+
+    # create a new query with an added ``WHERE`` clause.
+    query = query.filter(User.name == 'John')
+
+    # This line would add a new filter, "anding" it with the previous filter.
+    query = query.filter(or_(User.name == 'John', User.name == 'Jane'))
+
+    # Calls to query methods like filter(), order(), group_by, ...
+    # can be chained. They usually do not modify an existing query object:
+    query = session.query(User).filter(User.name == 'John').order_by(
+        User.name).limit(10)
+
 
 Selecting and Editing
 ---------------------
@@ -318,7 +333,12 @@ bind values::
 Similarly to ``func``, you can use the ``op`` function to use any DB operator,
 even if not foreseen by SQLAlchemy::
 
+    # SELECT * FROM data WHERE (10, 20)::point <@ area
     session.query(Data).filter(Point(10, 20).op('<@')(Data.area))
+
+    # SELECT * FROM data WHERE ip_address << '192.168.0.0/24'::inet
+    session.query(Data).filter(Data.ip_address.op('<<')(
+        ip_network('192.168.0.0/24')))
 
 |ell| generally:
 
