@@ -93,6 +93,19 @@ Example: Timing Functions
     hello()
     timed_hello()
 
+
+.. nextslide::
+    :increment:
+
+**Some details to note:**
+
+* The "timed" function takes another function ``f`` as argument.
+* It defines a new function with variadic arguments (remember the earlier
+  slides).
+* Inside that function, it calls ``f`` by delegating all arguments to it.
+* This can be used to do |ell| "stuff" before and/or after calling ``f``.
+* |ell| and/or modify arguments.
+
 But there's a problem
 ---------------------
 
