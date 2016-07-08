@@ -162,6 +162,6 @@ The following will work:
 
 .. code-block:: text
 
-    $ python myapp.sub1.sub2.somemodule
+    $ python -m myapp.sub1.sub2.somemodule
 
 For details, see `PEP 366 <https://www.python.org/dev/peps/pep-0366/>`_
