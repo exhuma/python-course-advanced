@@ -316,8 +316,8 @@ to ``side_effect``.
         return results[oid]
 
     def test_stubbing(self):
-        with patch('a.b.c') as mck_obj:
-            mck_obj.amethod.side_effect = my_stub
+        with patch('core.snmp') as mck_obj:
+            mck_obj.get.side_effect = my_stub
 
             ...
 
@@ -328,13 +328,12 @@ Faking/Stubbing (with generators)
 Instead of assigning a function to ``side_effect``, you can assign a generator
 to it.
 
-* If used as generator expression: completely ignores any arguments passed to
-  ``amethod``.
+* Completely ignores any arguments passed to ``amethod``. (Only works if you
+  want to ignore the input arguments).
 * Each consecutive call, ``amethod`` returns the next value from the generator.
 * Stores the call details (f. ex.: ``amethod.mock_calls``)
 * If the method is called more often than there are values, a ``StopIteration``
-  may be raised.
-
+  is raised.
 
 .. nextslide::
     :increment:
@@ -376,10 +375,12 @@ which accepts any calls. This can be quite handy for DI/IOC.
     def test_interfaces(self):
         from mymodel import get_interfaces
         fake_device = object()
+        fake_device.ip = '192.168.0.100'
         mocked_snmp = MagicMock()
         mocked_snmp.walk.return_value = [1, 2, 3]
         result = get_interfaces(mocked_snmp, fake_device)
-        mocked_snmp.walk.assert_called_with('1.3.6.1.2.1.2.2')
+        mocked_snmp.walk.assert_called_with('192.168.0.100',
+                                            '1.3.6.1.2.1.2.2')
         # ... and verify the contents of "result"
 
 
