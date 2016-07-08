@@ -7,7 +7,8 @@ Regular Expressions
 
 * The :py:mod:`re` module.
 * Python RegEx syntax very similar to Perl.
-* Syntax for the regexes themselves. *Not* the language syntax!
+* Syntax for the regexes themselves. *Not* the language syntax (There is no
+  ``~=`` operator)!
 * Raw strings (``r'...'``) avoids escaping backslashes.
 * The :py:data:`re.VERBOSE` flag allows for multiline regexes with comments.
 * The :py:data:`re.MULTILINE` flag allows searching across newlines.
