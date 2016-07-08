@@ -55,7 +55,14 @@ Example: HTML Wrappers
     print(bold(emphasize('Hello')))
 
 
-.. nextslide::
+Summary
+~~~~~~~
+
+* Higher order functions let you dynamically create or modify functions.
+* Useful to refactor multiple *very* similar pieces of code, which would
+  otherwise not be possible to refactor.
+
+**Note:**
 
 * The ``multiplicator`` and ``wrapper`` example are very simple!
 * They can also be solved differently without difficulty.
