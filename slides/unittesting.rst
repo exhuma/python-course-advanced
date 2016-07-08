@@ -118,8 +118,8 @@ Example:
 
 Other ways to setup your tests:
 
-* ``setUpClass``
-* ``tearDownClass``
+* ``setUpClass``  *(must be a class-method)*
+* ``tearDownClass``  *(must be a class-method)*
 * ``setUpModule``
 * ``tearDownModule``
 
