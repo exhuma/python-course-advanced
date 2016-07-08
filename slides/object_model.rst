@@ -200,7 +200,7 @@ Magic Methods Example (ctd)
 
 
 Exercise
---------
+~~~~~~~~
 
 * Create a new class called ``CustomClass``. The class should:
 
@@ -304,7 +304,7 @@ implement ``__hash__`` you will see the following error:
 
 
 Exercise: Hashable Classes
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * Try to add instances of your class to a set.
 * |ell| how about keys in dictionaries?
@@ -371,7 +371,7 @@ Using the descriptor from the previous slide:
 
 
 Exercise: Descriptors
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 
 * Write a descriptor ``RoValue``.
