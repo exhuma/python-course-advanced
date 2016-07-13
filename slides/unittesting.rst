@@ -426,8 +426,9 @@ General Tips for Unit Testing
     :increment:
 
 * If it's hard to test, it may hint to bad design.
-
 * If it's hard to mock, it may also hint to bad design. Consider using DI/IOC.
+* Be *extra* careful to not reproduce **application logic** when mocking
+  (third-party library logic is fine though).
 
 
 Personal Workflow

@@ -32,7 +32,7 @@ Code With Error
 Post Mortem Debugging
 ---------------------
 
-Run the above code with: ``python -m pdb foo.py``
+Running the above code with: ``python -m pdb foo.py``
 
 .. code-block:: text
     :class: smaller
