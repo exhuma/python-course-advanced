@@ -148,7 +148,8 @@ Running Modules with Relative Imports
 
 .. code-block:: python
 
-    # python myapp/sub1/sub2/somemodule
+    # python myapp/sub1/sub2/somemodule.py
+
     Traceback (most recent call last):
     File "/usr/lib/python2.7/runpy.py", line 174, in _run_module_as_main
         "__main__", fname, loader, pkg_name)

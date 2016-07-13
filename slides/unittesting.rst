@@ -8,7 +8,7 @@ Core Python
 Unit testing is part of the standard library (in the ``unittest`` module). The
 standard library also offers:
 
-* Automated test discovery (The docs say Python 3.2+, but also works in 2.7)
+* Automated test discovery (As of Python 3.2+)
 * Conditional test skipping (f.ex.: only run tests on a specific hostname).
 * mocking (via ``unittest.mock`` in Python3.3+)
 
