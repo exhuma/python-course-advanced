@@ -217,7 +217,7 @@ Example Mocking
 
 
     def get_hostname(ip):
-        return snmp.get(ip, '1.3.6.1.2.1.1.5.0')
+        return snmp.get(ip, '1.3.6.1.2.1.1.5.0').strip()
 
 
 Testing the above function has several challenges:
@@ -243,7 +243,7 @@ Testing the above function has several challenges:
 
     def test_hostname(self):
         with patch('core.snmp') as mock_snmp:
-            mock_snmp.get.return_value = 'myhostname'
+            mock_snmp.get.return_value = 'myhostname   '
             result = core.get_hostname('1.2.3.4')
         expected = 'myhostname'
         self.assertEqual(result, expected)
