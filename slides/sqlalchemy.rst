@@ -49,7 +49,7 @@ ORM Advantages / Disadvantages
 * A lot less SQL to write.
 * Possibility to build your query step-by-step.
 * *Can* be database agnostic.
-* Map Python classes to Business objects.
+* Map to Business objects (Python classes) to database tables/queries.
 * May generate suboptimal SQL queries:
 
   * **n+1 problem** (Prevent using `Eager Loading`_).
