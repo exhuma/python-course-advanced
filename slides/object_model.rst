@@ -237,7 +237,7 @@ Exercise
 
     def test_comparison_b(self):
         a = CustomClass({'a': 1, 'b': 2})
-        b = CustomClass({'b': 1, 'a': 2})
+        b = CustomClass({'b': 2, 'a': 1})
         self.assertEqual(a, b)
 
     def test_comparison_c(self):
