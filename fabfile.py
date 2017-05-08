@@ -5,19 +5,32 @@ INSTANCE = '2016'
 
 
 @fab.task
+def fetch_common_files():
+    '''
+    Put shared files from the "common" folder of the repository into the proper
+    place for building.
+    '''
+    l = fab.local
+    l('cp -v ../common/*.css slides/_static')
+
+
+@fab.task
 def build_slides():
+    fab.execute(fetch_common_files)
     with fab.lcd('slides'):
         fab.local('make slides')
 
 
 @fab.task
 def build_html():
+    fab.execute(fetch_common_files)
     with fab.lcd('slides'):
         fab.local('make html')
 
 
 @fab.task
 def build_linked():
+    fab.execute(fetch_common_files)
     with fab.lcd('slides'):
         fab.local('make slides html')
 
