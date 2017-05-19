@@ -21,7 +21,6 @@ Topics
     sqlalchemy
     parsing
 
-    finish
     references
 
 .. include:: ../../common/introduction.rst
