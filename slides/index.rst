@@ -20,6 +20,7 @@ Topics
 
     sqlalchemy
     parsing
+    parallel
 
     references
 
@@ -34,6 +35,7 @@ Topics
 
 .. include:: sqlalchemy.rst
 .. include:: parsing.rst
+.. include:: parallel.rst
 
 .. include:: ../../common/finish.rst
 .. include:: references.rst
