@@ -22,8 +22,6 @@ Topics
     parsing
     parallel
 
-    references
-
 .. include:: ../../common/introduction.rst
 .. include:: catching_up.rst
 
@@ -38,6 +36,5 @@ Topics
 .. include:: parallel.rst
 
 .. include:: ../../common/finish.rst
-.. include:: references.rst
 
 .. vim: set path=.,slides,,

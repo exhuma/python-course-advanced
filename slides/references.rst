@@ -1,4 +1,0 @@
-References
-==========
-
-* http://sqlalchemy.org/
