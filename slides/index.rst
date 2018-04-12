@@ -18,7 +18,6 @@ Topics
     object_model
     higher_order
 
-    sqlalchemy
     parallel
 
 .. include:: ../common/introduction.rst
@@ -30,7 +29,6 @@ Topics
 .. include:: object_model.rst
 .. include:: higher_order.rst
 
-.. include:: sqlalchemy.rst
 .. include:: parallel.rst
 
 .. include:: ../common/finish.rst
