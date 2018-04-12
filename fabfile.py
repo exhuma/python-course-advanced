@@ -1,7 +1,11 @@
 import fabric.api as fab
+from fabric.context_managers import shell_env
+from os.path import abspath
 
 fab.env.roledefs['www'] = ['michel.albert.lu']
 INSTANCE = '2017'
+VIRTUAL_ENV = abspath('./env')
+ENVPATH = '%s/bin:$PATH' % VIRTUAL_ENV
 
 
 @fab.task
@@ -11,30 +15,41 @@ def fetch_common_files():
     place for building.
     '''
     l = fab.local
-    l('cp -v ../common/custom.css slides/_static')
+    l('cp -v common/custom.css slides/_static')
 
 
 @fab.task
 def build_slides():
     fab.execute(fetch_common_files)
-    fab.local('cp -v ../common/slidestyle.css slides/_static/htmlstyle.css')
+    fab.local('cp -v common/slidestyle.css slides/_static/htmlstyle.css')
     with fab.lcd('slides'):
-        fab.local('make slides')
+        with shell_env(PATH=ENVPATH, VIRTUAL_ENV=VIRTUAL_ENV):
+            fab.local('make slides')
 
 
 @fab.task
 def build_html():
     fab.execute(fetch_common_files)
-    fab.local('cp -v ../common/htmlstyle.css slides/_static/htmlstyle.css')
+    fab.local('cp -v common/htmlstyle.css slides/_static/htmlstyle.css')
     with fab.lcd('slides'):
-        fab.local('make html')
+        with shell_env(PATH=ENVPATH, VIRTUAL_ENV=VIRTUAL_ENV):
+            fab.local('make html')
 
 
 @fab.task
 def build_linked():
     fab.execute(fetch_common_files)
     with fab.lcd('slides'):
-        fab.local('make slides html')
+        with shell_env(PATH=ENVPATH, VIRTUAL_ENV=VIRTUAL_ENV):
+            fab.local('make slides html')
+
+
+@fab.task
+def develop():
+    fab.local('[ -d env ] || python3 -m venv env')
+    fab.local('./env/bin/pip install hieroglyph')
+    fab.local('git submodule init')
+    fab.local('git submodule update')
 
 
 @fab.task
