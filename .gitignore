@@ -1,2 +1,4 @@
 *.pyc
 /slides/_build
+/slides/_static/custom.css
+/slides/_static/htmlstyle.css
