@@ -19,7 +19,6 @@ Topics
     higher_order
 
     sqlalchemy
-    parsing
     parallel
 
 .. include:: ../common/introduction.rst
@@ -32,7 +31,6 @@ Topics
 .. include:: higher_order.rst
 
 .. include:: sqlalchemy.rst
-.. include:: parsing.rst
 .. include:: parallel.rst
 
 .. include:: ../common/finish.rst
