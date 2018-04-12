@@ -22,7 +22,7 @@ Topics
     parsing
     parallel
 
-.. include:: ../../common/introduction.rst
+.. include:: ../common/introduction.rst
 .. include:: catching_up.rst
 
 .. include:: unittesting.rst
@@ -35,6 +35,6 @@ Topics
 .. include:: parsing.rst
 .. include:: parallel.rst
 
-.. include:: ../../common/finish.rst
+.. include:: ../common/finish.rst
 
 .. vim: set path=.,slides,,

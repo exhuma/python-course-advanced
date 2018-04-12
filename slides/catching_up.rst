@@ -1,4 +1,4 @@
-.. include:: ../../common/rst_defs.rst
+.. include:: ../common/rst_defs.rst
 
 Python Basic Recap
 ==================
