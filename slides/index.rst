@@ -10,8 +10,6 @@ Topics
     :maxdepth: 1
     :name: mastertoc
 
-    catching_up
-
     unittesting
     debugging
 
@@ -21,7 +19,6 @@ Topics
     parallel
 
 .. include:: ../common/introduction.rst
-.. include:: catching_up.rst
 
 .. include:: unittesting.rst
 .. include:: debugging.rst
