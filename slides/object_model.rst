@@ -274,14 +274,14 @@ Running tests:
 Hashable Classes
 ----------------
 
-The two most common reasons to implement ``__hash__`` are if you want instances
-of your class to be |ell|
+The two most common reasons to implement ``__hash__`` are:
 
-    * |ell| used as keys in dictionaries,
-    * |ell| used as items in sets
+    * |ell| you want to use instances of your class as keys in dictionaries,
+    * |ell| you want to use instances of your class in sets.
 
 All classes are hasheable by default, **unless** you define an ``__eq__``
-method!
+method! The default implementation will have a different hash value for each
+instance, even if the member values are identical.
 
 .. nextslide::
     :increment:
