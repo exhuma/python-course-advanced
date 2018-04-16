@@ -1,4 +1,5 @@
 .. include:: abbr.rst
+.. include:: ../common/rst_defs.rst
 
 Python - Advanced
 =================
