@@ -9,15 +9,28 @@ Introduction
 
 Python has several models for parallel code execution:
 
-* Classical subclassing and starting stopping manually.
-* Futures (Promises)
-* Explicit coroutines via ``async``/``await`` (since Python 3.5)
+* Multi-Threading (See :py:mod:`threading`)
+* Multi-Processing (See :py:mod:`multiprocessing`)
+* Async I/O (See :py:mod:`asyncio`)
 
-Both the "classical" and "futures" approach can be run in multiple processes or
-threads. Coroutines are primarily used for asynchronous I/O like network or
-disk access which is very well supported in :py:mod:`asyncio`. Coroutines *can*
-of course be used for other kinds of parallel execution.
+.. warning:: Warning
 
+    :py:mod:`asyncio` is *not* parallel by default!
+
+
+Multithreading & Multiprocessing
+--------------------------------
+
+Code can be parallelised using different methods:
+
+* Classical subclassing and starting stopping manually (See
+  :py:class:`threading.Thread` and :py:class:`multiprocessing.Process`).
+* Futures/Promises via "Pools" (See
+  :py:class:`~concurrent.futures.ProcessPoolExecutor` and
+  :py:mod:`~concurrent.futures.ThreadPoolExecutor`).
+
+For multiprocessing, another usful class to spawn workers is
+:py:class:`multiprocessing.Pool`.
 
 The GIL
 -------
@@ -31,16 +44,8 @@ The GIL
 * Consider using multi-processing instead of multi-threading when needing CPU!
 
 
-Classical Method
-----------------
-
-* Provided by the two modules :py:mod:`threading` and
-  :py:mod:`multiprocessing`.
-* Subclasing either :py:class:`threading.Thread` or
-  :py:mod:`multiprocessing.Process`.
-
-.. nextslide::
-    :increment:
+Classical Method Example
+------------------------
 
 .. code-block:: python
 
@@ -65,8 +70,8 @@ Classical Method
     thread2.join()
 
 
-Futures/Promises
-----------------
+Futures/Promises Example
+------------------------
 
 * Provided by the :py:mod:`concurrent.futures` module.
 * Submit tasks to a :py:class:`~concurrent.futures.ProcessPoolExecutor` or a
@@ -123,3 +128,55 @@ Futures/Promises
                 print('%r generated an exception: %s' % (url, exc))
             else:
                 print('%r page is %d bytes' % (url, len(data)))
+
+
+.. rst-class:: smaller-slide
+
+Async I/O
+---------
+
+Using asyncio does **not** mean doing parallel execution! The default asyncio
+event-loop *runs in one thread*!
+
+*However:* asyncio makes it possible to suspend code waiting on I/O until the
+OS reports that I/O is ready & available. This is done using "selectors"
+(\*nix) and "proactors" (Windows).
+
+While I/O is waiting, other code gets a chance to run while still running in
+only one thread. This has several advantages:
+
+* No need for synchronisation primitive
+* No overhead
+* *much* simpler code
+* Not subject to the GIL (unless you do threading with ayncio of course).
+
+
+asyncio example
+---------------
+
+.. code-block:: python
+    :class: smaller
+
+    from asyncio import get_event_loop, sleep, gather
+
+    async def fetch(i, sleeptime):
+        print(f'Job #{i} is sleeping for {sleeptime}s')
+        await sleep(sleeptime)
+        print(f'Job #{i} finished')
+        return i, sleeptime * 2
+
+
+    async def process(jobs, loop):
+        tasks = []
+        for i, sleeptime in enumerate(jobs):
+            print(f'Adding process #{i}, waiting for {sleeptime}s')
+            tasks.append(loop.create_task(fetch(i, sleeptime)))
+        result = await gather(*tasks)
+        return result
+
+    if __name__ == '__main__':
+        loop = get_event_loop()
+        result = loop.run_until_complete(process([5, 2, 1, 3], loop))
+        loop.close()
+        for i, jobresult in result:
+            print(f'Result for job #{i}: {jobresult}')
