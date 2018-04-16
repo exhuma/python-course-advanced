@@ -217,40 +217,58 @@ Exercise
 .. code-block:: python
     :class: tinycode
 
-    def test_instantiation(self):
-        CustomClass({'a': 1, 'b': 2})
+    from unittest import TestCase
 
-    def test_read_access(self):
-        instance = CustomClass({'a': 1, 'b': 2})
-        result = instance['a']
-        self.assertEqual(result, 1)
 
-    def test_write_access(self):
-        instance = CustomClass({'a': 1, 'b': 2})
-        with self.assertRaises(AttributeError):
-            instance['a'] = 10
+    class TestCustomClass(TestCase):
 
-    def test_comparison_a(self):
-        a = CustomClass({'a': 1, 'b': 2})
-        b = CustomClass({'a': 1, 'b': 2})
-        self.assertEqual(a, b)
+        def test_instantiation(self):
+            CustomClass({'a': 1, 'b': 2})
 
-    def test_comparison_b(self):
-        a = CustomClass({'a': 1, 'b': 2})
-        b = CustomClass({'b': 2, 'a': 1})
-        self.assertEqual(a, b)
+        def test_read_access(self):
+            instance = CustomClass({'a': 1, 'b': 2})
+            result = instance['a']
+            self.assertEqual(result, 1)
 
-    def test_comparison_c(self):
-        a = CustomClass({'a': 1, 'b': 2})
-        b = CustomClass({'b': 2, 'a': 3})
-        self.assertNotEqual(a, b)
+        def test_write_access(self):
+            instance = CustomClass({'a': 1, 'b': 2})
+            with self.assertRaises(AttributeError):
+                instance['a'] = 10
 
-    def test_mutability(self):
-        mapping = {'a': 1, 'b': 2}
-        instance = CustomClass(mapping)
-        mapping['a'] = 10
-        result = instance['a']
-        self.assertEqual(result, 1)
+        def test_comparison_a(self):
+            a = CustomClass({'a': 1, 'b': 2})
+            b = CustomClass({'a': 1, 'b': 2})
+            self.assertEqual(a, b)
+
+        def test_comparison_b(self):
+            a = CustomClass({'a': 1, 'b': 2})
+            b = CustomClass({'b': 2, 'a': 1})
+            self.assertEqual(a, b)
+
+        def test_comparison_c(self):
+            a = CustomClass({'a': 1, 'b': 2})
+            b = CustomClass({'b': 2, 'a': 3})
+            self.assertNotEqual(a, b)
+
+.. nextslide::
+    :increment:
+
+.. code-block:: python
+    :class: tinycode
+
+        def test_mutability(self):
+            mapping = {'a': 1, 'b': 2}
+            instance = CustomClass(mapping)
+            mapping['a'] = 10
+            result = instance['a']
+            self.assertEqual(result, 1)
+
+Running tests:
+
+.. code-block:: bash
+
+    python -m unittest mytests.py
+
 
 
 Hashable Classes
