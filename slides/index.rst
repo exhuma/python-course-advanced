@@ -11,6 +11,7 @@ Topics
     :maxdepth: 1
     :name: mastertoc
 
+    advanced_functions
     object_model
     higher_order
 
@@ -22,6 +23,7 @@ Topics
 
 .. include:: ../common/introduction.rst
 
+.. include:: advanced_functions.rst
 .. include:: object_model.rst
 .. include:: higher_order.rst
 
