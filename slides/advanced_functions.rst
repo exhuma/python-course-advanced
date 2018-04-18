@@ -27,6 +27,26 @@ Variadic Functions and Default Arguments
     it may be useful to use other names.
 
 
+Enforced Keyword Arguments
+--------------------------
+
+It is possible to *require* some arguments to be passed as keyword arguments:
+
+
+.. code-block:: python
+
+    import sys
+
+    def say_hello(name, *, stream=sys.stdout):
+        print(f'Hello {name}', file=stream)
+
+    say_hello('John')
+    say_hello('Jane', stream=sys.stderr)
+    say_hello('Jane', sys.stderr)  # This will cause an error
+
+
+.. rst-class:: smaller-slide
+
 
 Type Hints
 ----------
