@@ -47,6 +47,105 @@ It is possible to *require* some arguments to be passed as keyword arguments:
 
 .. rst-class:: smaller-slide
 
+functools
+---------
+
+:py:mod:`functools` contains a couple of very interesting helpers to work with
+functions:
+
+* :py:class:`functools.partial` -- Returns a new function which "freezes" some
+  arguments of the original function (similar to "currying")
+* :py:func:`functools.lru_cache` -- Implementation of a "Least Recently Used" cache
+* :py:func:`functools.singledispatch` -- Helper to dispatch calls to other
+  functions depending on type.
+
+
+functools.partial
+~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+    from functools import partial
+
+    def say_hello(greeting, name):
+        print(f'{greeting} {name}')
+
+    hello = partial(say_hello, greeting='Hello')
+
+    hello('John')
+
+
+Output::
+
+    Hello John
+
+
+.. rst-class:: smaller-slide
+
+functools.lru_cache
+~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+    from datetime import datetime
+    from functools import lru_cache
+    from time import sleep
+
+    @lru_cache(10)
+    def slow_function(n):
+        sleep(5)
+        return n * 2
+
+    print(datetime.now(), 'start')
+    print(datetime.now(), slow_function(1))
+    print(datetime.now(), slow_function(1))
+    print(datetime.now(), slow_function(2))
+    print(datetime.now(), 'end')
+
+
+Output::
+
+    2018-04-18 07:47:20.506880 start
+    2018-04-18 07:47:20.506907 2
+    2018-04-18 07:47:25.512025 2
+    2018-04-18 07:47:25.512044 4
+    2018-04-18 07:47:30.515630 end
+
+
+.. rst-class:: smaller-slide
+
+functools.singledispatch
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+    :class: smaller
+
+    from functools import singledispatch
+
+    @singledispatch
+    def process(value):
+        print('<unknown>', value)
+
+    @process.register(int)
+    def process_numeric(value):
+        print('Calling for numeric value', value * 2)
+
+    @process.register(str)
+    def process_string(value):
+        print('Calling for text', value * 2)
+
+    process(1)
+    process('This is some Text')
+    process(1.1)
+
+
+Output::
+
+    Calling for numeric value 2
+    Calling for text This is some TextThis is some Text
+    <unknown> 1.1
+
+
 
 Type Hints
 ----------
