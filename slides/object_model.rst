@@ -116,14 +116,19 @@ Testing Class Customisation
     >>> instance = MagicTest('hello')
     >>> instance
     <__main__.MagicTest object at 0x7f34a465d518>
+
     >>> repr(a)
     '<__main__.MagicTest object at 0x7f34a465d518>'
+
     >>> print(instance)
     <__main__.MagicTest object at 0x7f34a465d518>
+
     >>> str(a)
     '<__main__.MagicTest object at 0x7f34a465d518>'
+
     >>> hex(id(instance))
     '0x7f34a465d518'
+
     >>> instance.__class__
     <class '__main__.MagicTest'>
 
@@ -137,11 +142,14 @@ Testing Class Customisation
     >>> instance
     __repr__ called
     MagicTest(foo='hello')
+
     >>> print(instance)
     __str__ called
     Hello World!
+
     >>> hex(id(instance))
     '0x7f34a465d518'
+
     >>> instance.__class__
     <class '__main__.MagicTest'>
 
