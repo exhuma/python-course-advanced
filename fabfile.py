@@ -3,7 +3,7 @@ from fabric.context_managers import shell_env
 from os.path import abspath
 
 fab.env.roledefs['www'] = ['michel.albert.lu']
-INSTANCE = '2017'
+INSTANCE = '2018'
 VIRTUAL_ENV = abspath('./env')
 ENVPATH = '%s/bin:$PATH' % VIRTUAL_ENV
 
