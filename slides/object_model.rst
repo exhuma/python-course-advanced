@@ -294,6 +294,46 @@ instance, even if the member values are identical.
 .. nextslide::
     :increment:
 
+.. code-block:: python
+
+    >>> class Foo:
+    ...
+    ...     def __init__(self, name):
+    ...         self.name = name
+    ...
+    >>> x = Foo('John')
+    >>> y = Foo('John')
+    >>> users = {x, y}
+    >>> len(users)
+    2
+
+… probably not what we want?
+
+.. nextslide::
+    :increment:
+
+.. code-block:: python
+
+    >>> class Foo:
+    ...
+    ...     def __init__(self, name):
+    ...         self.name = name
+    ...
+    ...     def __eq__(self, other):
+    ...         return self.name == other.name
+    ...
+    ...     def __hash__(self):
+    ...         return hash(self.name)
+    ...
+    >>> x = Foo('John')
+    >>> y = Foo('John')
+    >>> users = {x, y}
+    >>> len(users)
+    1
+
+.. nextslide::
+    :increment:
+
 If Python needs to hash an instance of your custom class and it does *not*
 implement ``__hash__`` you will see the following error:
 
