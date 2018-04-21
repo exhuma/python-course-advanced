@@ -27,6 +27,56 @@ Variadic Functions and Default Arguments
     it may be useful to use other names.
 
 
+Example Variadic Function: Delegation
+-------------------------------------
+
+.. code-block:: python
+
+    import logging
+
+    def anonymise_log(message, *args, **kwargs):
+        message = remove_ips(message)
+        logging.log(message, *args, **kwargs)
+
+
+    anonymise_log('Hello World')
+    anonymise_log('Hello World', level=logging.DEBUG)
+    anonymise_log('Hello World', exc_info=True)
+
+Example Variadic Function: sum
+------------------------------
+
+.. code-block:: python
+
+    def mysum(*args):
+        total = 0
+        for item in args:
+            total == item
+        return total
+
+Example Variadic Function: Configuration
+----------------------------------------
+
+
+.. code-block:: python
+
+    def pretty_print(message, **config):
+        width = int(config.get('width', 80))
+        alignment = config.get('alignment', 'left')
+        fmtchars = {
+            'left': '<',
+            'center': '^',
+            'right': '>'
+        }
+        fmt = '{:%s%d}' % (fmtchars[alignment], width)
+        print(fmt.format(message))
+
+    pretty_print('msg1')
+    pretty_print('msg2', alignment='right')
+    pretty_print('msg3', width=80, alignment='center')
+
+
+
 Functions as Objects
 --------------------
 
