@@ -10,8 +10,8 @@ MRO and Multiple Inheritance
 ----------------------------
 
 * Python guarantees a monotonic MRO for multiple inheritance.
-* It relies on the order in which classes are *defined*: ``Foo(A, B)`` ≠
-  ``Foo(B, A)``!
+* It relies on the order in which classes are *defined:* |br|
+  ``Foo(A, B)`` ≠ ``Foo(B, A)``!
 * It uses the `C3 linearisation Algorithm
   <https://en.wikipedia.org/wiki/C3_linearization>`_.
 * `Python implementation of C3
