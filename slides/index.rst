@@ -1,4 +1,5 @@
 .. include:: abbr.rst
+.. include:: ../common/rst_defs.rst
 
 Python - Advanced
 =================
@@ -10,31 +11,29 @@ Topics
     :maxdepth: 1
     :name: mastertoc
 
-    catching_up
+    advanced_syntax
+    advanced_functions
+    object_model
+    higher_order
+
+    parallel
 
     unittesting
     debugging
 
-    object_model
-    higher_order
 
-    sqlalchemy
-    parsing
-    parallel
+.. include:: ../common/introduction.rst
 
-.. include:: ../../common/introduction.rst
-.. include:: catching_up.rst
+.. include:: advanced_syntax.rst
+.. include:: advanced_functions.rst
+.. include:: object_model.rst
+.. include:: higher_order.rst
+
+.. include:: parallel.rst
 
 .. include:: unittesting.rst
 .. include:: debugging.rst
 
-.. include:: object_model.rst
-.. include:: higher_order.rst
-
-.. include:: sqlalchemy.rst
-.. include:: parsing.rst
-.. include:: parallel.rst
-
-.. include:: ../../common/finish.rst
+.. include:: ../common/finish.rst
 
 .. vim: set path=.,slides,,

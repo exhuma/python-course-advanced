@@ -10,8 +10,8 @@ MRO and Multiple Inheritance
 ----------------------------
 
 * Python guarantees a monotonic MRO for multiple inheritance.
-* It relies on the order in which classes are *defined*: ``Foo(A, B)`` ≠
-  ``Foo(B, A)``!
+* It relies on the order in which classes are *defined:* |br|
+  ``Foo(A, B)`` ≠ ``Foo(B, A)``!
 * It uses the `C3 linearisation Algorithm
   <https://en.wikipedia.org/wiki/C3_linearization>`_.
 * `Python implementation of C3
@@ -116,14 +116,19 @@ Testing Class Customisation
     >>> instance = MagicTest('hello')
     >>> instance
     <__main__.MagicTest object at 0x7f34a465d518>
+
     >>> repr(a)
     '<__main__.MagicTest object at 0x7f34a465d518>'
+
     >>> print(instance)
     <__main__.MagicTest object at 0x7f34a465d518>
+
     >>> str(a)
     '<__main__.MagicTest object at 0x7f34a465d518>'
+
     >>> hex(id(instance))
     '0x7f34a465d518'
+
     >>> instance.__class__
     <class '__main__.MagicTest'>
 
@@ -137,11 +142,14 @@ Testing Class Customisation
     >>> instance
     __repr__ called
     MagicTest(foo='hello')
+
     >>> print(instance)
     __str__ called
     Hello World!
+
     >>> hex(id(instance))
     '0x7f34a465d518'
+
     >>> instance.__class__
     <class '__main__.MagicTest'>
 
@@ -217,53 +225,111 @@ Exercise
 .. code-block:: python
     :class: tinycode
 
-    def test_instantiation(self):
-        CustomClass({'a': 1, 'b': 2})
+    from unittest import TestCase
 
-    def test_read_access(self):
-        instance = CustomClass({'a': 1, 'b': 2})
-        result = instance['a']
-        self.assertEqual(result, 1)
 
-    def test_write_access(self):
-        instance = CustomClass({'a': 1, 'b': 2})
-        with self.assertRaises(AttributeError):
-            instance['a'] = 10
+    class TestCustomClass(TestCase):
 
-    def test_comparison_a(self):
-        a = CustomClass({'a': 1, 'b': 2})
-        b = CustomClass({'a': 1, 'b': 2})
-        self.assertEqual(a, b)
+        def test_instantiation(self):
+            CustomClass({'a': 1, 'b': 2})
 
-    def test_comparison_b(self):
-        a = CustomClass({'a': 1, 'b': 2})
-        b = CustomClass({'b': 2, 'a': 1})
-        self.assertEqual(a, b)
+        def test_read_access(self):
+            instance = CustomClass({'a': 1, 'b': 2})
+            result = instance['a']
+            self.assertEqual(result, 1)
 
-    def test_comparison_c(self):
-        a = CustomClass({'a': 1, 'b': 2})
-        b = CustomClass({'b': 2, 'a': 3})
-        self.assertNotEqual(a, b)
+        def test_write_access(self):
+            instance = CustomClass({'a': 1, 'b': 2})
+            with self.assertRaises(AttributeError):
+                instance['a'] = 10
 
-    def test_mutability(self):
-        mapping = {'a': 1, 'b': 2}
-        instance = CustomClass(mapping)
-        mapping['a'] = 10
-        result = instance['a']
-        self.assertEqual(result, 1)
+        def test_comparison_a(self):
+            a = CustomClass({'a': 1, 'b': 2})
+            b = CustomClass({'a': 1, 'b': 2})
+            self.assertEqual(a, b)
+
+        def test_comparison_b(self):
+            a = CustomClass({'a': 1, 'b': 2})
+            b = CustomClass({'b': 2, 'a': 1})
+            self.assertEqual(a, b)
+
+        def test_comparison_c(self):
+            a = CustomClass({'a': 1, 'b': 2})
+            b = CustomClass({'b': 2, 'a': 3})
+            self.assertNotEqual(a, b)
+
+.. nextslide::
+    :increment:
+
+.. code-block:: python
+    :class: tinycode
+
+        def test_mutability(self):
+            mapping = {'a': 1, 'b': 2}
+            instance = CustomClass(mapping)
+            mapping['a'] = 10
+            result = instance['a']
+            self.assertEqual(result, 1)
+
+Running tests:
+
+.. code-block:: bash
+
+    python -m unittest mytests.py
+
 
 
 Hashable Classes
 ----------------
 
-The two most common reasons to implement ``__hash__`` are if you want instances
-of your class to be |ell|
+The two most common reasons to implement ``__hash__`` are:
 
-    * |ell| used as keys in dictionaries,
-    * |ell| used as items in sets
+    * |ell| you want to use instances of your class as keys in dictionaries,
+    * |ell| you want to use instances of your class in sets.
 
 All classes are hasheable by default, **unless** you define an ``__eq__``
-method!
+method! The default implementation will have a different hash value for each
+instance, even if the member values are identical.
+
+.. nextslide::
+    :increment:
+
+.. code-block:: python
+
+    >>> class Foo:
+    ...
+    ...     def __init__(self, name):
+    ...         self.name = name
+    ...
+    >>> x = Foo('John')
+    >>> y = Foo('John')
+    >>> users = {x, y}
+    >>> len(users)
+    2
+
+… probably not what we want?
+
+.. nextslide::
+    :increment:
+
+.. code-block:: python
+
+    >>> class Foo:
+    ...
+    ...     def __init__(self, name):
+    ...         self.name = name
+    ...
+    ...     def __eq__(self, other):
+    ...         return self.name == other.name
+    ...
+    ...     def __hash__(self):
+    ...         return hash(self.name)
+    ...
+    >>> x = Foo('John')
+    >>> y = Foo('John')
+    >>> users = {x, y}
+    >>> len(users)
+    1
 
 .. nextslide::
     :increment:

@@ -129,6 +129,16 @@ Other ways to setup your tests:
     your tests will return an ``Error`` instead of a ``Failure``.
 
 
+.. nextslide::
+    :increment:
+
+.. tip::
+
+    When an error occurs in ``setUp``, ``tearDown`` will not be called and may
+    lead to resource leaks. To avoid this, consider using
+    :py:meth:`unittest.TestCase.addCleanup` to clean-up resources.
+
+
 Test Suites
 -----------
 
