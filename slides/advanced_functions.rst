@@ -128,21 +128,23 @@ functools.singledispatch
 
     @process.register(int)
     def process_numeric(value):
-        print('Calling for numeric value', value * 2)
+        print('Calling with numeric value', value * 2)
 
     @process.register(str)
     def process_string(value):
-        print('Calling for text', value * 2)
+        print('Calling with text', value * 2)
 
     process(1)
     process('This is some Text')
     process(1.1)
 
 
-Output::
+Output:
 
-    Calling for numeric value 2
-    Calling for text This is some TextThis is some Text
+.. code-block:: text
+
+    Calling with numeric value 2
+    Calling with text This is some TextThis is some Text
     <unknown> 1.1
 
 
