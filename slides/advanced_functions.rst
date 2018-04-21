@@ -268,8 +268,8 @@ Challenges
 * Python 2 support
 
 
-
 .. rst-class:: smaller-slide
+
 The typing module
 ~~~~~~~~~~~~~~~~~
 
@@ -277,6 +277,7 @@ The :py:mod:`typing` module contains generic types to use with type hints. Examp
 
 
 .. code-block:: python
+    :class: smaller
 
     from typing import List, Set, TypeVar
 
