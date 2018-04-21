@@ -110,7 +110,9 @@ as values in a dictionary::
 Enforced Keyword Arguments
 --------------------------
 
-It is possible to *require* some arguments to be passed as keyword arguments:
+It is possible to *require* some arguments to be passed as keyword arguments.
+This is done by separating normal arguments from keyword arguments with a
+single ``*``:
 
 
 .. code-block:: python
