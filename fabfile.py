@@ -85,8 +85,9 @@ def serve_linked():
 @fab.task
 @fab.roles('www')
 def publish():
-    remote_folder = '/var/www/html/shelf/python-advanced-%s' % INSTANCE
-    latest_folder = '/var/www/html/shelf/python-advanced-latest'
+    remote_root = '/var/www/html/shelf'
+    remote_folder = '%s/python-advanced-%s' % (remote_root, INSTANCE)
+    latest_folder = '%s/python-advanced-latest' % remote_root
     fab.execute(build_html)
     fab.execute(build_slides)
     fab.run('mkdir -p %s' % remote_folder)
@@ -95,3 +96,10 @@ def publish():
     with fab.settings(warn_only=True):
         fab.run('test -h {0} && rm {0}'.format(latest_folder))
     fab.run('ln -s %s %s' % (remote_folder, latest_folder))
+
+    pack_folder = 'python-advanced-%s' % INSTANCE
+    fab.local('mkdir -p %s' % pack_folder)
+    fab.local('mv slides/_build/html slides/_build/slides %s' % pack_folder)
+    fab.local('tar czf %s.tar.gz %s' % (pack_folder, pack_folder))
+    fab.local('rm -rf %s' % pack_folder)
+    fab.put('%s.tar.gz' % pack_folder, remote_folder)
