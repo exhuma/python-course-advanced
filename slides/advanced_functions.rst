@@ -27,6 +27,36 @@ Variadic Functions and Default Arguments
     it may be useful to use other names.
 
 
+Functions as Objects
+--------------------
+
+Because functions are objects, they can be assigned to variables. For example
+as values in a dictionary::
+
+    def case_1():
+        print("Hello 1")
+
+    def case_2():
+        print("Hello 2")
+
+    cases = {
+        1: case_1,
+        2: case_2,
+    }
+
+    user_selection = int(input('Type a number: '))
+
+    function = cases.get(user_selection, lambda: print("unknown case"))
+    function()
+
+.. note::
+
+    Python has no ``case`` or ``switch`` statement. Using functions as values
+    in dictionaries, lets you have a very similar code structure. As a
+    side-effect, this will give you functions for each switched case, which
+    makes unit-testing easier.
+
+
 Enforced Keyword Arguments
 --------------------------
 
@@ -261,34 +291,3 @@ mypy difficulties
   virtual environments).
 * Dependencies to Python source which has no type-annotations
 * Following imports not found on the mypy search path
-
-
-
-Functions as Objects
---------------------
-
-Because functions are objects, they can be assigned to variables. For example
-as values in a dictionary::
-
-    def case_1():
-        print("Hello 1")
-
-    def case_2():
-        print("Hello 2")
-
-    cases = {
-        1: case_1,
-        2: case_2,
-    }
-
-    user_selection = int(input('Type a number: '))
-
-    function = cases.get(user_selection, lambda: print("unknown case"))
-    function()
-
-.. note::
-
-    Python has no ``case`` or ``switch`` statement. Using functions as values
-    in dictionaries, lets you have a very similar code structure. As a
-    side-effect, this will give you functions for each switched case, which
-    makes unit-testing easier.
