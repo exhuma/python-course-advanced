@@ -67,6 +67,12 @@ Reference: `Basic Customisation`_
 
 .. _Basic Customisation: https://docs.python.org/3/reference/datamodel.html#basic-customization
 
+.. note::
+
+    * ``__getattr__`` gets only called if ``__getattribute__`` does not find anythng.
+    * ``__getattribute__`` gets called unconditionally but is more error-prone
+      (risk of endless loop if not careful).
+
 Magic Methods Example
 ---------------------
 
