@@ -77,6 +77,26 @@ Example Variadic Function: Configuration
 
 
 
+Enforced Keyword Arguments
+--------------------------
+
+It is possible to *require* some arguments to be passed as keyword arguments.
+This is done by separating normal arguments from keyword arguments with a
+single ``*``:
+
+
+.. code-block:: python
+
+    import sys
+
+    def say_hello(name, *, stream=sys.stdout):
+        print(f'Hello {name}', file=stream)
+
+    say_hello('John')
+    say_hello('Jane', stream=sys.stderr)
+    say_hello('Jane', sys.stderr)  # This will cause an error
+
+
 Functions as Objects
 --------------------
 
@@ -105,26 +125,6 @@ as values in a dictionary::
     in dictionaries, lets you have a very similar code structure. As a
     side-effect, this will give you functions for each switched case, which
     makes unit-testing easier.
-
-
-Enforced Keyword Arguments
---------------------------
-
-It is possible to *require* some arguments to be passed as keyword arguments.
-This is done by separating normal arguments from keyword arguments with a
-single ``*``:
-
-
-.. code-block:: python
-
-    import sys
-
-    def say_hello(name, *, stream=sys.stdout):
-        print(f'Hello {name}', file=stream)
-
-    say_hello('John')
-    say_hello('Jane', stream=sys.stderr)
-    say_hello('Jane', sys.stderr)  # This will cause an error
 
 
 .. rst-class:: smaller-slide
