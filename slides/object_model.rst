@@ -428,6 +428,10 @@ are accessed, modified and/or deleted. Practical example (logging)::
 
 Using the descriptor from the previous slide:
 
+.. side-bar:: Note
+
+    Descriptors have to be set on a *class*, not an *instance*
+
 .. code-block:: python
 
 
