@@ -11,6 +11,7 @@ Topics
     :maxdepth: 1
     :name: mastertoc
 
+    warnings
     advanced_syntax
     advanced_functions
     object_model
