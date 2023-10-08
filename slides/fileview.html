@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Introduction to Python</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/malbert.css" id="theme" />
+    <link
+      rel="stylesheet"
+      href="plugin/highlight/monokai.css"
+      id="highlight-theme"
+    />
+  </head>
+
+  <body id="Fileview" class="fileview">
+    <img id="Logo" src="images/python-logo-generic.svg" />
+    <div id="FileviewContent">
+      <p id="FileHeader">File: <a id="FileLink"></a></p>
+      <pre id="FileContent"></pre>
+    </div>
+    <script type="module">
+      /**
+       * We need to make the import path relative to the current filename. The
+       * following is a quick & dirty solution.
+       */
+      function load_hljs() {
+        let here = new URL(window.location);
+        let base = here.pathname.split("/").slice(0, -1).join("/");
+        let hljs = null;
+        return import(`${base}/plugin/highlight/highlight.esm.js`).then(
+          (module) => {
+            return module.default;
+          }
+        );
+        return hljs;
+      }
+
+      let hljs = null;
+      load_hljs().then((result) => {
+        hljs = result;
+      });
+      function setLink(filename) {
+        let link = document.getElementById("FileLink");
+        if (!link) {
+          return;
+        }
+        link.href = filename;
+        link.appendChild(document.createTextNode(filename));
+      }
+      function setPreContent(filename) {
+        let fileinfo = filename.split(".");
+        let extension = fileinfo[fileinfo.length - 1];
+        let content = document.getElementById("FileContent");
+        if (!content) {
+          return;
+        }
+        if (extension !== "csv" && extension !== "py") {
+          let msg = `${filename}: Unsupported filetype!`;
+          content.appendChild(document.createTextNode(msg));
+          return;
+        }
+        let children = content.children;
+        for (let i = 0; i < children.length; i++) {
+          content.removeChild(children[i]);
+        }
+        fetch(filename).then((response) => {
+          if (!response.ok) {
+            let msg = `${filename}: (${response.status}) ${response.statusText}`;
+            content.appendChild(document.createTextNode(msg));
+            return;
+          }
+          response.text().then((filedata) => {
+            content.appendChild(document.createTextNode(filedata));
+            content.classList.add(`language-${extension}`);
+            if (hljs !== null) {
+              hljs().hljs.highlightElement(content);
+            }
+          });
+        });
+      }
+      const params = new URLSearchParams(window.location.search);
+      let filename = params.get("filename");
+      setPreContent(filename);
+      setLink(filename);
+    </script>
+  </body>
+</html>
