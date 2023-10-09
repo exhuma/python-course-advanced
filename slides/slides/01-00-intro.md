@@ -1,7 +1,9 @@
-# Python
+# Python - Advanced
 
 ```python
-print("Hello World!")
+mapping: dict[str, int] = {
+    lambda x: x.upper(): len(x) for x in ["Hello", "World"]
+}
 ```
 
 ---

@@ -617,7 +617,8 @@ PRE.smallcode {
   padding: 0.1em 0.7em;
 }
 
-DIV.text {
+DIV.text,
+P.text {
   text-align: left;
   font-size: 65%;
 }
