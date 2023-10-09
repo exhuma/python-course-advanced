@@ -1,8 +1,18 @@
-from fabric import task
+from os import environ
 from os.path import abspath
+
+from fabric import task, Connection
+from patchwork.transfers import rsync as rsync_
 
 INSTANCE = '2023'
 
+
+def rsync(ctx, *args, **kwargs):  # type: ignore
+    """Ugly workaround for https://github.com/fabric/patchwork/issues/16."""
+    ssh_agent = environ.get("SSH_AUTH_SOCK", None)
+    if ssh_agent:
+        ctx.config["run"]["env"]["SSH_AUTH_SOCK"] = ssh_agent
+    return rsync_(ctx, *args, **kwargs)
 
 @task
 def publish(ctx):
