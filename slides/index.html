@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Advanced Python</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/malbert.css" id="theme" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link
+      rel="stylesheet"
+      href="plugin/highlight/monokai.css"
+      id="highlight-theme"
+    />
+  </head>
+
+  <body>
+    <img id="Logo" src="images/python-logo-generic.svg" />
+    <div class="reveal">
+      <div class="slides">
+        <section
+          data-markdown="slides/01-00-intro.md"
+          data-separator-vertical="\^\n\n"
+        ></section>
+        <section
+          data-markdown="slides/02-00-packaging.md"
+          data-separator-vertical="\^\n\n"
+        ></section>
+        <section
+          data-markdown="slides/03-00-warnings.md"
+          data-separator-vertical="\^\n\n"
+        ></section>
+        <section
+          data-markdown="slides/04-00-advanced-syntax.md"
+          data-separator-vertical="\^\n\n"
+        ></section>
+        <section
+          data-markdown="slides/05-00-advanced-functions.md"
+          data-separator-vertical="\^\n\n"
+        ></section>
+        <section
+          data-markdown="slides/06-00-object-model.md"
+          data-separator-vertical="\^\n\n"
+        ></section>
+        <section
+          data-markdown="slides/07-00-higher-order.md"
+          data-separator-vertical="\^\n\n"
+        ></section>
+        <section
+          data-markdown="slides/08-00-parallel.md"
+          data-separator-vertical="\^\n\n"
+        ></section>
+        <section
+          data-markdown="slides/09-00-unit-testing.md"
+          data-separator-vertical="\^\n\n"
+        ></section>
+        <section
+          data-markdown="slides/10-00-debugging.md"
+          data-separator-vertical="\^\n\n"
+        ></section>
+        <section>
+          <h2>Thank You!</h2>
+          <div>
+            <img
+              alt="images/avatar.jpg"
+              class="avatar align-center"
+              src="images/avatar.jpg"
+            />
+          </div>
+          <h4>Questions?</h4>
+          <ul class="smaller">
+            <li>
+              <img
+                alt="github"
+                class="midline"
+                src="images/github-circle.png"
+              />
+              <a class="reference external" href="https://github.com/exhuma"
+                >exhuma</a
+              >
+            </li>
+            <li>
+              <a
+                class="midline reference internal"
+                href="images/stackoverflow.png"
+                ><img
+                  alt="sover"
+                  class="midline"
+                  src="images/stackoverflow.png"
+                  style="height: 36px"
+              /></a>
+              <a
+                class="reference external"
+                href="https://stackoverflow.com/users/160665/exhuma"
+                >exhuma</a
+              >
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/mermaid/mermaid.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+        slideNumber: "c/t",
+        showNotes: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealMermaid],
+      });
+    </script>
+  </body>
+</html>
