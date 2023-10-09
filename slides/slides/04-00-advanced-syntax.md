@@ -1,6 +1,6 @@
 # Syntax Features & Useful Builtins
 
----
+^
 
 ## List-Comprehensions
 
@@ -93,7 +93,7 @@ unique_keys = {row[0] for row in data}
 my_generator = (row for row in data)
 ```
 
----
+^
 
 ## zipping
 

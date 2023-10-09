@@ -1,6 +1,6 @@
 # Advanced Functions
 
----
+^
 
 ## Default Arguments
 
@@ -26,7 +26,7 @@ def unexpected_output(my_argument=[]):
     print(my_argument)
 ```
 
----
+^
 
 ## Variadic Functions
 
@@ -47,7 +47,7 @@ The `args` and `kwargs` are only conventional names. Sometimes (but rarely)
 it may be useful to use other names.
 </div>
 
----
+^
 
 ## Call Delegation
 
@@ -76,7 +76,7 @@ anything about the downstream function. And code editors will not be able to
 "look into" the downstream function either. As a result, code-completion in
 editors loses its usefulness.
 
----
+^
 
 
 ## Enforced Keyword Arguments
@@ -97,7 +97,7 @@ say_hello('Jane', stream=sys.stderr)
 say_hello('Jane', sys.stderr)  # This will cause an error
 ```
 
----
+^
 
 ## Functions as Objects
 
@@ -122,7 +122,7 @@ function = cases.get(user_selection, lambda: print("unknown case"))
 function()
 ```
 
----
+^
 
 ## functools
 

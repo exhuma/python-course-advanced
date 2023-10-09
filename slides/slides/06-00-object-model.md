@@ -6,7 +6,7 @@ This section explains how Python sees and works with your own objects. It also
 explains how you can add special behaviour to your objects by implementing
 "magic" methods.
 
----
+^
 
 ## MRO and Multiple Inheritance
 
@@ -63,7 +63,7 @@ The MRO can be displayed using:
 >>> print(D.mro())
 ```
 
----
+^
 
 ## Magic Methods
 
@@ -82,7 +82,7 @@ Note:
 * ``__getattribute__`` gets called unconditionally but is more error-prone
     (risk of endless loop if not careful).
 
----
+^
 
 ## Magic Methods Example
 
@@ -335,7 +335,7 @@ class Foo:
         self.b = b
 ```
 
----
+^
 
 ## Descriptors
 
@@ -389,7 +389,7 @@ Note:
 
 Descriptors have to be set on a *class*, not an *instance*
 
----
+^
 
 ## Metaclasses
 

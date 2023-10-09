@@ -1,6 +1,6 @@
 # Warnings
 
----
+^
 
 ## Emitting Warnings
 
@@ -27,7 +27,7 @@ See
 for details.
 
 
----
+^
 
 ## Dealing with Warnings
 

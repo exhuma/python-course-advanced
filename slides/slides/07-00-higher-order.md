@@ -3,7 +3,7 @@
 "Higher Order Functions" are functions that operate on functions. They can
 either modify existing functions or generate new functions.
 
----
+^
 
 ## Example: Multiplicators
 
